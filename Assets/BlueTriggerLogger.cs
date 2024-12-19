@@ -43,7 +43,7 @@ public class BlueTriggerLogger : MonoBehaviour
             if (currentFill > 0.56f){
 isInsideTrigger = false; 
 }
-            if (currentFill > 0.55f)
+            if (currentFill > 0.54f)
             {
                 // Change the side color to green once the _Fill value exceeds 0.56
                 liquid.SetColor(shaderPropertyNameSideColor, AfterChange);
