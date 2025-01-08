@@ -24,7 +24,7 @@ public class CarController : MonoBehaviour
     public float motorTorque;
     public float breakTorque;
     public float steeringMax;
-    public Text gearDisplayText; // UI Text for displaying gear changes
+    public Text gearDisplayText, gearDisplayTextDash; // UI Text for displaying gear changes
     private Coroutine gearDisplayCoroutine;
 
     void Start()
@@ -40,31 +40,19 @@ public class CarController : MonoBehaviour
         // Set motorTorque and brakeTorque based on the gear
         switch (GearValue)
         {
-            case 0: // Neutral
+            case 0: // Park
                 motorTorque = 0;
                 breakTorque = 100;
                 break;
-            case 1: // Gear 1
-                motorTorque = 100;
+            case 1: // Neutral
+                motorTorque = 0;
                 breakTorque = 100;
                 break;
-            case 2: // Gear 2
-                motorTorque = 200;
-                breakTorque = 150;
-                break;
-            case 3: // Gear 3
-                motorTorque = 300;
-                breakTorque = 200;
-                break;
-            case 4: // Gear 4
+            case 2: // Drive
                 motorTorque = 400;
                 breakTorque = 250;
                 break;
-            case 5: // Gear 5
-                motorTorque = 500;
-                breakTorque = 300;
-                break;
-            case 6: // Reverse
+            case 3: // Reverse
                 motorTorque = -100;
                 breakTorque = 100;
                 break;
@@ -98,11 +86,11 @@ public class CarController : MonoBehaviour
         // Gear Change logic
         if (GearUp.action.WasPressedThisFrame())
         {
-            if (GearValue < 6) // Max gear is 5
+            if (GearValue < 3) // Max gear is 5
             {
                 GearValue++;
                 Debug.Log("Gear Up: " + GearValue);
-                ShowGearDisplay((GearValue == 0 ? "Neutral" : GearValue == 6 ? "Reverse" : GearValue.ToString()));
+                ShowGearDisplay((GearValue == 0 ? "Park": GearValue==1? "Neutral": GearValue == 2?"Drive" : GearValue == 3 ? "Reverse" : GearValue.ToString()));
             }
         }
 
@@ -112,13 +100,14 @@ public class CarController : MonoBehaviour
             {
                 GearValue--;
                 Debug.Log("Gear Down: " + GearValue);
-                ShowGearDisplay((GearValue == 0 ? "Neutral" : GearValue == 6 ? "Reverse" : GearValue.ToString()));
+                ShowGearDisplay((GearValue == 0 ? "Park": GearValue==1? "Neutral": GearValue == 2?"Drive" : GearValue == 3 ? "Reverse" : GearValue.ToString()));
             }
         }
     }
 
     private void ShowGearDisplay(string gearText)
     {
+        gearDisplayTextDash.text = gearText;
         if (gearDisplayText == null) return;
 
         if (gearDisplayCoroutine != null)
