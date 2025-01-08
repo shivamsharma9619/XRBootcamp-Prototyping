@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - car
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Interactable
+  - steering
+  - wheel
   - 
   - 
   - 
