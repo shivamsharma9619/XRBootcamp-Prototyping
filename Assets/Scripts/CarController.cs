@@ -18,43 +18,50 @@ public class CarController : MonoBehaviour
     public int GearValue = 0; // 0 for neutral, 1-5 for forward gears, -1 for reverse
     public WheelCollider[] wheels = new WheelCollider[4];
     public InputActionReference trigger;
-    public InputActionReference GearUp, GearDown;
+    public InputActionReference BreakBTN;
     public XRKnob knob;
     public bool isPressed = false;
     public float motorTorque;
     public float breakTorque;
     public float steeringMax;
-    public Text gearDisplayText, gearDisplayTextDash; // UI Text for displaying gear changes
+    public Text gearDisplayText; // UI Text for displaying gear changes
     private Coroutine gearDisplayCoroutine;
+    public GetYRotation GearVal;
 
     void Start()
     {
-        if (gearDisplayText != null)
-        {
-            gearDisplayText.gameObject.SetActive(false); // Hide the text initially
-        }
+        
     }
 
     void Update()
     {
+        GearValue=GearVal.mappedValue;
+        Debug.Log("Val" + GearValue);
         // Set motorTorque and brakeTorque based on the gear
         switch (GearValue)
         {
-            case 0: // Park
+            case 1: // Park
                 motorTorque = 0;
                 breakTorque = 100;
+                gearDisplayText.text="Park";
                 break;
-            case 1: // Neutral
+            case 2: //Neutral
                 motorTorque = 0;
                 breakTorque = 100;
+                gearDisplayText.text="Neutral";
+
                 break;
-            case 2: // Drive
+            case 3: // Drive
                 motorTorque = 400;
                 breakTorque = 250;
+                gearDisplayText.text="Drive";
+
                 break;
-            case 3: // Reverse
+            case 4: // Reverse
                 motorTorque = -100;
                 breakTorque = 100;
+                gearDisplayText.text="Reverse";
+
                 break;
         }
 
@@ -76,38 +83,22 @@ public class CarController : MonoBehaviour
                 wheels[i].brakeTorque = breakTorque;
             }
         }
+        if(BreakBTN.action.WasPressedThisFrame()){
+            for (int i = 0; i < wheels.Length; i++)
+            {
+                wheels[i].brakeTorque = breakTorque+2000;
+            }
+        }
 
         // Steering logic
         for (int i = 0; i < wheels.Length - 2; i++)
         {
             wheels[i].steerAngle = -(knob.value - 0.5f) * 120f; // Adjusting steering sensitivity
         }
-
-        // Gear Change logic
-        if (GearUp.action.WasPressedThisFrame())
-        {
-            if (GearValue < 3) // Max gear is 5
-            {
-                GearValue++;
-                Debug.Log("Gear Up: " + GearValue);
-                ShowGearDisplay((GearValue == 0 ? "Park": GearValue==1? "Neutral": GearValue == 2?"Drive" : GearValue == 3 ? "Reverse" : GearValue.ToString()));
-            }
-        }
-
-        if (GearDown.action.WasPressedThisFrame())
-        {
-            if (GearValue > 0) // Min gear is reverse (-1)
-            {
-                GearValue--;
-                Debug.Log("Gear Down: " + GearValue);
-                ShowGearDisplay((GearValue == 0 ? "Park": GearValue==1? "Neutral": GearValue == 2?"Drive" : GearValue == 3 ? "Reverse" : GearValue.ToString()));
-            }
-        }
     }
 
     private void ShowGearDisplay(string gearText)
     {
-        gearDisplayTextDash.text = gearText;
         if (gearDisplayText == null) return;
 
         if (gearDisplayCoroutine != null)
