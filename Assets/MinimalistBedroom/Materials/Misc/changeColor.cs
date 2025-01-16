@@ -12,25 +12,24 @@ public class changeColor : MonoBehaviour
         {
             Debug.LogWarning("No renderers assigned!");
         }
-        SetColor3();
     }
 
     // Function to change all renderers to Color 1
     public void SetColor1()
     {
-        ChangeColor("#FF5733"); // Example: Reddish-Orange
+        ChangeColor("#383030"); 
     }
 
     // Function to change all renderers to Color 2
     public void SetColor2()
     {
-        ChangeColor("#33FF57"); // Example: Green
+        ChangeColor("#FFF6AA");
     }
 
     // Function to change all renderers to Color 3
     public void SetColor3()
     {
-        ChangeColor("#3357FF"); // Example: Blue
+        ChangeColor("#E7E7E7");
     }
 
     // General method to apply the color to all renderers
