@@ -1,7 +1,7 @@
 
-# Survive360| AI-Powered XR Disaster Preparedness Training
+# Kavach| AI-Powered XR Disaster Preparedness Training
 
-Survive360 is an educational XR application that places users in realistic emergency scenarios and guides them through the correct actions to take during disasters such as earthquakes, fires, floods, and other critical situations.
+Kavach is an educational XR application that places users in realistic emergency scenarios and guides them through the correct actions to take during disasters such as earthquakes, fires, floods, and other critical situations.
 
 The platform combines Virtual Reality (VR), Artificial Intelligence (AI), and interactive storytelling to create a safe and engaging environment where users can build awareness, improve decision-making, and strengthen disaster preparedness skills.
 
